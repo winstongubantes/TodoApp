@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TodoApp.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:viewModels="clr-namespace:TodoApp.ViewModels;assembly=TodoApp"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:DataType="viewModels:LoginPageViewModel">
+    <StackLayout Margin="20">
+        <Entry Placeholder="Username" Text="{Binding UserName}" />
+        <Entry
+            IsPassword="True"
+            Placeholder="Password"
+            Text="{Binding Password}" />
+        <Button Command="{Binding LoginCommand}" Text="Submit" />
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TodoApp.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:TodoApp.Converters;assembly=TodoApp"
+    xmlns:models="clr-namespace:TodoApp.Models;assembly=TodoApp"
+    xmlns:viewModels="clr-namespace:TodoApp.ViewModels;assembly=TodoApp"
+    x:Name="ParentPage"
+    Title="{Binding Title}"
+    x:DataType="viewModels:MainPageViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AddTodoItemCommand}" Text="Add Todo" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <ListView HasUnevenRows="True" ItemsSource="{Binding TodoItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout x:DataType="models:TodoItem">
+                            <!--<SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Green"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}}, Path=EditTodoItemCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Edit" />
+                                    <SwipeItem
+                                        BackgroundColor="Red"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}}, Path=DeleteTodoItemCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Delete" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <SwipeView.Content>
+                                <Grid ColumnDefinitions="*, Auto, Auto" RowDefinitions="Auto, Auto">
+                                    <Label Text="{Binding Description}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Text="{Binding TaskDateTime, StringFormat='MMM dd yyyy, hh:mm tt'}" />
+
+                                    <StackLayout
+                                        Grid.RowSpan="2"
+                                        Grid.Column="2"
+                                        BackgroundColor="Green">
+                                        <Label
+                                            HorizontalTextAlignment="Center"
+                                            Text="Edit"
+                                            TextColor="White"
+                                            VerticalTextAlignment="Center" />
+                                    </StackLayout>
+
+                                    <StackLayout
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        BackgroundColor="Red">
+                                        <Label
+                                            HorizontalTextAlignment="Center"
+                                            Text="Delete"
+                                            TextColor="White"
+                                            VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </SwipeView.Content>
+                        </SwipeView>-->
+
+                            <Grid
+                                Margin="0,1,0,0"
+                                ColumnDefinitions="*, Auto, Auto, Auto"
+                                ColumnSpacing="0"
+                                RowDefinitions="Auto, Auto">
+
+                                <StackLayout Margin="8,4,0,4" Spacing="0">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1"
+                                        Text="{Binding Description}" />
+                                    <Label IsVisible="{Binding IsDone, Converter={StaticResource NegateBooleanConverter}}" Text="{Binding TaskDateTime, StringFormat='{0:MMMM dd, hh:mm tt}'}" />
+                                    <Label IsVisible="{Binding IsDone}" Text="(DONE)" />
+                                </StackLayout>
+
+
+                                <Grid
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    BackgroundColor="Gray"
+                                    IsVisible="{Binding IsDone, Converter={StaticResource NegateBooleanConverter}}"
+                                    WidthRequest="40">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}}, Path=SetTodoItemDoneCommand}" CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                    <Label
+                                        FontSize="Micro"
+                                        HorizontalTextAlignment="Center"
+                                        Text="Set as Done"
+                                        TextColor="White"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+
+                                <Grid
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    BackgroundColor="Green"
+                                    WidthRequest="40">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}}, Path=EditTodoItemCommand}" CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                    <Label
+                                        FontSize="Micro"
+                                        HorizontalTextAlignment="Center"
+                                        Text="Edit"
+                                        TextColor="White"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+
+                                <Grid
+                                    Grid.RowSpan="2"
+                                    Grid.Column="3"
+                                    BackgroundColor="Red"
+                                    WidthRequest="40">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}}, Path=DeleteTodoItemCommand}" CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                    <Label
+                                        FontSize="Micro"
+                                        HorizontalTextAlignment="Center"
+                                        Text="Delete"
+                                        TextColor="White"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TodoApp.Views.TodoItemDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:viewModels="clr-namespace:TodoApp.ViewModels;assembly=TodoApp"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:DataType="viewModels:TodoItemDetailPageViewModel">
+    <StackLayout Margin="20" Spacing="0">
+
+        <Label Text="Description" />
+        <Editor Placeholder="Description" Text="{Binding Description}" />
+
+        <Label Margin="0,10,0,0" Text="Task Date" />
+        <DatePicker Date="{Binding TaskDateTime}" />
+
+        <Grid ColumnDefinitions="*, Auto">
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="40"
+                Source="{Binding ImageUrl}"
+                WidthRequest="40" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding TakePictureCommand}"
+                Text="Take Picture" />
+        </Grid>
+
+        <Button Command="{Binding UpdateCommand}" Text="{Binding ButtonText}" />
+    </StackLayout>
+</ContentPage>
